@@ -2,7 +2,7 @@
   <div class="div">
     <br>
     <div class="divCorrect">
-      <h3>Neue Aufgabe</h3><br>
+      <h3 >Neue Aufgabe</h3><br>
   <v-sheet width="200" class="mx-auto">
     <v-form fast-fail @submit.prevent>
       <v-text-field width="300" id="vtextfield" v-model="list.todo" label="Aufgabe"></v-text-field>
@@ -16,6 +16,9 @@
 </template>
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h3{
+  margin-top: 50px;
+}
 .div {
   display: flex;
   justify-content: center;
