@@ -52,6 +52,7 @@ export default {
             this.list.id = response.data.id;
             console.log(response.data);
             this.submitted = true;
+            alert("Todo wurde erstellt!")
           })
           .catch(e => {
             console.log(e);
