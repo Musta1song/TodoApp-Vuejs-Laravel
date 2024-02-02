@@ -42,11 +42,15 @@ h3{
 
 .Todo {
   display: flex;
+  margin-top: 40px;
   justify-content: center;
 }
 
 .todoCorrect {
   display: block;
+}
+ma-2{
+  width: 2px;
 }
 </style>
 
