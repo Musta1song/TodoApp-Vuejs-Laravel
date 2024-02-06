@@ -10,7 +10,7 @@ const routes =  [
   },
 
   {
-    path: "/createtodo",
+    path: "/newTodo",
     name: "add",
     component: CreateTodo
   }

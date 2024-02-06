@@ -8,7 +8,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/createtodo">Todo erstellen</a>
+          <a class="nav-link active" aria-current="page" href="/newTodo">Todo erstellen</a>
         </div>
       </div>
     </div>

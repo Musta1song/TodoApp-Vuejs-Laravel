@@ -1,44 +1,40 @@
 <template>
   <div class="Todo">
-    <div class="todoCorrect">
-      <h3 class="text-purple">Todo</h3>
-
-      <h3> &nbsp;
-      </h3>
-      <div v-for="todo in list" :key="todo">
-        <div class="flex" v-if="todo.isDone === false">
-          <v-card width="300">
-            <v-list :items="items" class="bg-yellow px-1">{{ todo.todo }}
-            </v-list>
-            <v-btn class="ma-2" color="green-accent-3" v-on:click="ToIsDone(todo.id)">
+    <div class="block">
+    <h3 class="text-purple">Todo</h3>
+    <div>
+      <div>
+        <v-card width="500" v-for="todo in list" :key="todo">
+          <v-list :items="items" class="bg-yellow px-1" v-if="todo.isDone === false">{{ todo.todo }}
+            <button class="ma-2 bg-green" color="green-accent-3" v-on:click="ToIsDone(todo.id)">
               <v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
-            </v-btn>
-            <v-btn class="ma-2" color="red-accent-2 " v-on:click="deleteTodo(todo.id)">
+            </button>
+            <button class="ma-2 bg-red" color="red-accent-2 " v-on:click="deleteTodo(todo.id)">
               <v-icon start icon="mdi-minus-circle"></v-icon>
-            </v-btn>
-          </v-card>
-        </div>
-        <div class="flex" v-else>
-          <v-card width="300">
-            <v-list :items="items" class="bg-green px-1">{{ todo.todo }}</v-list>
-            <v-btn class="ma-2" color="red-accent-2 " v-on:click="deleteTodo(todo.id)">
+            </button>
+          </v-list>
+        </v-card>
+      </div>
+      <div>
+        <v-card class="" width="500" v-for="todo in list" :key="todo">
+          <v-list :items="items" class="bg-green px-1 " v-if="todo.isDone === true">{{ todo.todo }}
+            <button class="ma-2 bg-red" v-on:click="deleteTodo(todo.id)">
               <v-icon start icon="mdi-minus-circle"></v-icon>
-            </v-btn>
-          </v-card>
-        </div>
+            </button>
+          </v-list>
+        </v-card>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3{
+h3 {
   margin-top: 10px;
 }
-.flex {
-  display: flex;
-}
+
 
 .Todo {
   display: flex;
@@ -46,11 +42,11 @@ h3{
   justify-content: center;
 }
 
-.todoCorrect {
-  display: block;
-}
-ma-2{
-  width: 2px;
+button {
+  font-size: 13px;
+  width: 50px;
+  height: 30px;
+  border-radius: 5px;
 }
 </style>
 
