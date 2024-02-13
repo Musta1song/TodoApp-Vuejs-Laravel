@@ -1,26 +1,26 @@
 <template>
   <div class="Todo">
     <div class="block">
-    <h3 class="text-purple">Todo</h3>
+    <h3>Todos</h3>
     <div>
       <div>
         <v-card width="500" v-for="todo in list" :key="todo">
           <v-list :items="items" class="bg-yellow px-1" v-if="todo.isDone === false">{{ todo.todo }}
-            <button class="ma-2 bg-green" color="green-accent-3" v-on:click="ToIsDone(todo.id)">
+            <v-btn class="ma-2 bg-green" color="green-accent-3" v-on:click="ToIsDone(todo.id)">
               <v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
-            </button>
-            <button class="ma-2 bg-red" color="red-accent-2 " v-on:click="deleteTodo(todo.id)">
+            </v-btn>
+            <v-btn class="ma-2 bg-red" color="red-accent-2 " @click="deleteTodo(todo.id)">
               <v-icon start icon="mdi-minus-circle"></v-icon>
-            </button>
+            </v-btn>
           </v-list>
         </v-card>
       </div>
       <div>
         <v-card class="" width="500" v-for="todo in list" :key="todo">
           <v-list :items="items" class="bg-green px-1 " v-if="todo.isDone === true">{{ todo.todo }}
-            <button class="ma-2 bg-red" v-on:click="deleteTodo(todo.id)">
+            <v-btn class="ma-2 bg-red" @click="deleteTodo(todo.id)">
               <v-icon start icon="mdi-minus-circle"></v-icon>
-            </button>
+            </v-btn>
           </v-list>
         </v-card>
       </div>
@@ -33,9 +33,19 @@
 <style scoped>
 h3 {
   margin-top: 10px;
+  color: rgb(32, 123, 153);
 }
 
-
+.v-btn{
+  min-width: 0;
+  min-height: 0;
+  width: 40px;
+  border-radius: 10%;
+  height: 30px;
+}
+.v-icon{
+  margin-inline: 0;
+}
 .Todo {
   display: flex;
   margin-top: 40px;
@@ -86,7 +96,8 @@ export default {
         .catch(e => {
           console.log(e);
         });
-      window.location.reload();
+        setTimeout(this.reload, 500)
+
     },
     deleteTodo(ID) {
       DataService.delete(ID)
@@ -98,15 +109,11 @@ export default {
         .catch(e => {
           console.log(e);
         });
-      window.location.reload();
+        setTimeout(this.reload, 500)
+
 
     },
-    getIdByRadioEvent(event) {
-      this.id = event.target.value;
-      console.log(this.id)
-      const bt = document.getElementById("button");
-      bt.style.visibility = "visible"
-    }
+    reload(){window.location.reload()},
   },
   mounted() {
     this.getData();

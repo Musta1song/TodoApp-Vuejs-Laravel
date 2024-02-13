@@ -2,29 +2,37 @@
   <div class="div">
     <br>
     <div class="divCorrect">
-      <h3 >Neue Aufgabe</h3><br>
-  <v-sheet width="200" class="mx-auto">
-    <v-form fast-fail @submit.prevent>
-      <v-text-field width="300" id="vtextfield" v-model="list.todo" label="Aufgabe"></v-text-field>
+      <h3>Neue Aufgabe</h3><br>
+      <v-sheet width="200" class="mx-auto">
+        <v-form fast-fail @submit.prevent>
+          <v-text-field width="300" id="vtextfield" v-model="list.todo" label="Aufgabe"></v-text-field>
 
 
-      <v-btn color="blue" type="submit" v-on:click="Submit()" block class="mt-2">Submit</v-btn>
-    </v-form>
-  </v-sheet>
-</div>
-</div>
+          <v-btn width="100" type="submit" v-on:click="Submit()" block class="mt-2">Aufgabe erstellen</v-btn>
+        </v-form>
+      </v-sheet>
+    </div>
+  </div>
 </template>
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3{
+h3 {
   margin-top: 50px;
+  font-size: 23px;
 }
+
 .div {
   display: flex;
   justify-content: center;
 }
 
-.divCorrect{
+.v-btn {
+  background-color: lightblue;
+}
+
+.v-form {}
+
+.divCorrect {
   display: block;
 }
 </style>

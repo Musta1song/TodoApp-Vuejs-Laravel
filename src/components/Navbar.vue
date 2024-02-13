@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-blue">
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">Home</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -23,5 +23,8 @@ export default {
 </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+nav{
+  background-color: rgb(121, 204, 231);
+}</style>
   
