@@ -68,11 +68,12 @@ export default {
           .catch(e => {
             console.log(e);
           });
-      } else if (this.list.todo == "") {
-        alert("Feld darf nicht leer sein aus.")
-        const vTextField = document.getElementById("vtextfield");
-        vTextField.style.border = "1px solid red";
+        return
       }
+      alert("Feld darf nicht leer sein!")
+      const vTextField = document.getElementById("vtextfield");
+      vTextField.style.border = "1px solid red";
+
     },
 
 
