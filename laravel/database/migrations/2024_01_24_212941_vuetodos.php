@@ -15,6 +15,9 @@ return new class extends Migration
             $table->increments('id');
             $table->string('todo');
             $table->boolean('isDone');
+            $table->time('time');
+            $table->date('date');
+
             $table->timestamps();
         });
     }

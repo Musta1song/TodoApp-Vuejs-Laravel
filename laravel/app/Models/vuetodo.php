@@ -13,5 +13,7 @@ class vuetodo extends Model
 
     protected $fillable = [
       'todo',
-      'isDone'
+      'isDone',
+      'time',
+      'date'
     ];}

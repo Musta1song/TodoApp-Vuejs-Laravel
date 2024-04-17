@@ -1,23 +1,92 @@
 <template>
   <div class="div">
-    <br>
-    <div class="divCorrect">
-      <h3>Neue Aufgabe</h3><br>
-      <v-sheet width="200" class="mx-auto">
-        <v-form fast-fail @submit.prevent>
-          <v-text-field width="300" id="vtextfield" v-model="list.todo" label="Aufgabe"></v-text-field>
-
-
-          <v-btn width="100" type="submit" v-on:click="Submit()" block class="mt-2">Aufgabe erstellen</v-btn>
-        </v-form>
-      </v-sheet>
+    <div class="block">
+      <h3>Todo erstellen:</h3><br>
+      <v-form fast-fail @submit.prevent id="vform" >
+        <v-text-field width="200" v-model="todo.todo" label="Todo"></v-text-field>
+        <VueDatePicker placeholder="Uhrzeit" locale="de" v-model="todo.time" time-picker 
+         />
+         <br>
+        <VueDatePicker locale="de" placeholder="Datum" v-model="todo.date" cancelText="abbrechen" selectText="auswählen"
+          :enable-time-picker="false" />
+          <br>
+        <v-btn width="100" type="submit" v-on:click="Submit()" block class="mt-2">Aufgabe erstellen</v-btn>
+      </v-form>
     </div>
   </div>
 </template>
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
+<script>
+import DataService from '@/DataService';
+import moment from 'moment';
+
+export default {
+  name: 'CreateTodo',
+  data() {
+
+    return {
+      menu2: false,
+      modal2: false,
+      todo: {
+        todo: "",
+        time: null,
+        date: null,
+        isDone: false
+      }
+    }
+  },
+  computed: {
+    converttime: function(){
+      let hours = this.todo.time.hours
+      let minutes = this.todo.time.minutes
+return `${hours}:${minutes}:00`
+    },
+    momentdate: function () {
+      // `this` points to the vm instance
+      return moment(this.todo.date).format('YYYY-MM-DD');
+    }
+
+  },
+  methods: {
+    con() { console.log(this.todo) },
+    Submit() {
+
+      var data = {
+        todo: this.todo.todo,
+        time: this.converttime,
+        date: this.momentdate,
+        isDone: false
+      };
+      if (this.todo.todo != "") {
+
+        DataService.create(data)
+          .then(response => {
+            this.todo.id = response.data.id;
+            console.log(response.data);
+            this.submitted = true;
+            alert("Todo wurde erstellt!")
+          })
+          .catch(e => {
+            console.log(e);
+            alert("Ein Fehler ist aufgetreten.")
+          });
+        return
+      }
+      alert("Felder dürfen nicht leer sein!")
+      
+    },
+
+
+  }
+
+}
+
+</script>
 <style scoped>
+.v-date-picker {
+  zoom: 0.8;
+}
+
 h3 {
-  margin-top: 50px;
   font-size: 23px;
 }
 
@@ -30,57 +99,8 @@ h3 {
   background-color: lightblue;
 }
 
-.v-form {}
+.v-calendar {
+  width: 100px;
 
-.divCorrect {
-  display: block;
 }
 </style>
-  
-<script>
-import DataService from '@/DataService';
-export default {
-  name: 'CreateTodo',
-  data() {
-    return {
-      list: {
-        todo: "",
-        isDone: false
-      }
-    }
-  },
-  methods: {
-    Submit() {
-
-      var data = {
-        todo: this.list.todo,
-        isDone: false
-      };
-      if (this.list.todo != "") {
-
-        DataService.create(data)
-          .then(response => {
-            this.list.id = response.data.id;
-            console.log(response.data);
-            this.submitted = true;
-            alert("Todo wurde erstellt!")
-          })
-          .catch(e => {
-            console.log(e);
-          });
-        return
-      }
-      alert("Feld darf nicht leer sein!")
-      const vTextField = document.getElementById("vtextfield");
-      vTextField.style.border = "1px solid red";
-
-    },
-
-
-  }
-
-}
-
-</script>
-  
-  

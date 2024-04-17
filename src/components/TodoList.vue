@@ -1,84 +1,90 @@
 <template>
-  <div class="Todo">
-    <div class="block">
-    <h3>Todos</h3>
-    <div>
-      <div>
-        <v-card width="500" v-for="todo in list" :key="todo">
-          <v-list :items="items" class="bg-yellow px-1" v-if="todo.isDone === false">{{ todo.todo }}
+  <div class="flex ">
+    <div class="todos">
+      <v-list-item title="Todos"><v-btn v-on:click="edit()" class="float-end	bg-red"> <svg-icon type="mdi" :path="path2"></svg-icon>
+        </v-btn></v-list-item>
+      <v-divider></v-divider>
+      <div v-for="todo in list" :key="todo">
+        <div v-if="todo.date == momentdate && todo.isDone == false">
+          <v-list-item class="bg-white" link :title=todo.todo>{{ formatTime(todo.time) }}
             <v-btn class="ma-2 bg-green" color="green-accent-3" v-on:click="ToIsDone(todo.id)">
               <v-icon end icon="mdi-checkbox-marked-circle"></v-icon>
             </v-btn>
-            <v-btn class="ma-2 bg-red" color="red-accent-2 " @click="deleteTodo(todo.id)">
+            <v-btn class="ma-2 bg-red" color="red-accent-2 " @click="deleteTodo(todo.id)" id="deletebt">
               <v-icon start icon="mdi-minus-circle"></v-icon>
             </v-btn>
-          </v-list>
-        </v-card>
-      </div>
-      <div>
-        <v-card class="" width="500" v-for="todo in list" :key="todo">
-          <v-list :items="items" class="bg-green px-1 " v-if="todo.isDone === true">{{ todo.todo }}
-            <v-btn class="ma-2 bg-red" @click="deleteTodo(todo.id)">
+          </v-list-item>
+        </div>
+        <div v-if="todo.date == momentdate && todo.isDone == true">
+          <v-list-item class="bg-green" link :title=todo.todo>
+            {{ formatTime(todo.time) }}
+            <v-btn class="ma-2 bg-red" @click="deleteTodo(todo.id)" id="deletebt">
               <v-icon start icon="mdi-minus-circle"></v-icon>
             </v-btn>
-          </v-list>
-        </v-card>
+          </v-list-item>
+        </div>
+        <v-divider></v-divider>
+
       </div>
     </div>
+
+    <div class="calendar">
+      <VDatePicker v-model="date" mode="date" hide-time-header="true" />
+    </div>
   </div>
-  </div>
+
 </template>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin-top: 10px;
-  color: rgb(32, 123, 153);
-}
-
-.v-btn{
-  min-width: 0;
-  min-height: 0;
-  width: 40px;
-  border-radius: 10%;
-  height: 30px;
-}
-.v-icon{
-  margin-inline: 0;
-}
-.Todo {
-  display: flex;
-  margin-top: 40px;
-  justify-content: center;
-}
-
-button {
-  font-size: 13px;
-  width: 50px;
-  height: 30px;
-  border-radius: 5px;
-}
-</style>
-
-
 <script>
 import DataService from '@/DataService';
+import moment from 'moment';
+import { mdiPencil } from '@mdi/js';
+import SvgIcon from '@jamescoyle/vue-icon';
+
 export default {
   name: 'TodoList',
-  props: {
+  components: {
+    SvgIcon
   },
   data() {
     return {
-      list: null,
+      date: new Date(),
+      list: [],
       id: null,
+      path2: mdiPencil,
       selectedTodo: null,
-
     };
   },
+  computed: {
+    momentdate: function () {
+      // `this` points to the vm instance
+      return moment(this.date).format('YYYY-MM-DD');
+    }
+
+  },
   methods: {
+
+    formatTime(time) {
+      let newtime = moment(time, "HH:mm:ss").format("LT");
+      console.log(newtime)
+      return newtime
+    },
+    edit() {
+      for (let i = 0; i < this.list.length; i++) {
+
+        const deleteBt = document.querySelectorAll("[id='deletebt']")
+        for (let i = 0; i < deleteBt.length; i++) {
+
+          deleteBt[i].style.visibility = "visible"
+        }
+      }
+
+
+    },
+
     getData() {
       DataService.getAll()
         .then(response => {
+
           this.list = response.data;
           console.log(response.data);
         })
@@ -86,6 +92,7 @@ export default {
           console.log(e);
         });
     },
+
     ToIsDone(ID) {
       DataService.update(ID)
         .then(response => {
@@ -96,7 +103,7 @@ export default {
         .catch(e => {
           console.log(e);
         });
-        setTimeout(this.reload, 500)
+      setTimeout(this.reload, 500)
 
     },
     deleteTodo(ID) {
@@ -109,14 +116,43 @@ export default {
         .catch(e => {
           console.log(e);
         });
-        setTimeout(this.reload, 500)
+      setTimeout(this.reload, 500)
 
 
     },
-    reload(){window.location.reload()},
+    reload() { window.location.reload() },
   },
   mounted() {
     this.getData();
   }
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.v-btn {
+  min-width: 0;
+  min-height: 0;
+  width: 40px;
+  border-radius: 10%;
+  height: 25.0px;
+}
+
+.v-icon {
+  margin-inline: 0;
+}
+#deletebt{
+  visibility: hidden;
+  float: right;
+}
+.v-calendar {
+  height: 0;
+}
+
+
+.todos {
+  width: 30%;
+  height: 100vh;
+  background-color: rgb(153, 10, 10)
+}
+</style>

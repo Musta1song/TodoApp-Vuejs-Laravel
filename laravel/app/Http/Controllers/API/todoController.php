@@ -16,6 +16,9 @@ class todoController extends Controller
         $todo = new vuetodo([
           'todo' => $request->get('todo'),
           'isDone' => $request->get('isDone'),
+          'time' => $request->get('time'),
+          'date' => $request->get('date'),
+
         ]);
         $todo->save();
         return response()->json('Successfully added');
